@@ -1,2 +1,1 @@
-# DHMS_Final_Project
-Software Failure Tolerant and Highly Available Distributed Health Care  Management System
+# A fault-tolerant distributed system architecture employing Webservice for client-server interaction, a sequencer for request ordering, and multiple server replicas managed by replica managers to ensure system consistency and reliability through UDP unicast and multicast communications.
