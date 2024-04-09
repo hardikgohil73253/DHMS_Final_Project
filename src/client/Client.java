@@ -41,7 +41,7 @@ public class Client {
 
     public static void main(String[] args) throws Exception {
         URL frontendURL = new URL("http://localhost:8080/frontend?wsdl");
-        QName frontendQName = new QName("http://implementation.frontendController.controller/", "FEInterface");
+        QName frontendQName = new QName("http://implementation.frontendController.controller/", "FrontendService");
         frontendService = Service.create(frontendURL, frontendQName);
         init();
     }
@@ -271,16 +271,16 @@ public class Client {
     private static String promptForAppointmentType() {
         System.out.println("--------------------------------");
         System.out.println("Please choose an appointmentType below:");
-        System.out.println("1.MONTREAL");
-        System.out.println("2.QUEBEC");
-        System.out.println("3.SHERBROOKE");
+        System.out.println("1.Physician");
+        System.out.println("2.Surgeon");
+        System.out.println("3.Dental");
         switch (input.nextInt()) {
             case 1:
-                return AppointmentModel.MONTREAL;
+                return AppointmentModel.TYPE_PHYSICIAN;
             case 2:
-                return AppointmentModel.QUEBEC;
+                return AppointmentModel.TYPE_SURGEON;
             case 3:
-                return AppointmentModel.SHERBROOKE;
+                return AppointmentModel.TYPE_DENTAL;
         }
         return promptForAppointmentType();
     }

@@ -1,0 +1,2 @@
+2024-04-07 06:48:34 PM  login attempt
+2024-04-07 06:48:50 PM  attempting to addAppointment
