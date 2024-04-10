@@ -2,6 +2,7 @@ package client;
 
 import controller.frontendController.FEInterface;
 import Model.AppointmentModel;
+import controller.webcontroller.webServiceInterface;
 import log.Log;
 
 import javax.xml.namespace.QName;
@@ -14,7 +15,7 @@ public class Client {
 
     static Scanner input;
     public static Service frontendService;
-    private static FEInterface obj;
+    private static webServiceInterface obj;
     public static final int PATIENT_BOOK_APPOINTMENT = 1;
     public static final int PATIENT_GET_BOOKING_SCHEDULE = 2;
     public static final int PATIENT_CANCEL_APPOINTMENT = 3;
@@ -89,7 +90,7 @@ public class Client {
         return input.nextInt();
     }
     private static String getServerID(String userID) {
-        obj = frontendService.getPort(FEInterface.class);
+        obj = frontendService.getPort(webServiceInterface.class);
         return userID;
     }
 
@@ -123,7 +124,7 @@ public class Client {
                 appointmentType = promptForAppointmentType();
                 appointmentID = promptForAppointmentID();
                 Log.userLog(PatientID, " attempting to cancelAppointment");
-                serverResponse = obj.cancelAppointment(PatientID, appointmentID, appointmentType);
+                serverResponse = obj.cancelAppointment(PatientID, appointmentID);
                 System.out.println(serverResponse);
                 Log.userLog(PatientID, " bookAppointment", " appointmentID: " + appointmentID + " appointmentType: " + appointmentType + " ", serverResponse);
                 break;
@@ -209,7 +210,7 @@ public class Client {
                 appointmentType = promptForAppointmentType();
                 appointmentID = promptForAppointmentID();
                 Log.userLog(adminAppointmentID, " attempting to cancelAppointment");
-                serverResponse = obj.cancelAppointment(PatientID, appointmentID, appointmentType);
+                serverResponse = obj.cancelAppointment(PatientID, appointmentID);
                 System.out.println(serverResponse);
                 Log.userLog(adminAppointmentID, " cancelAppointment", " PatientID: " + PatientID + " appointmentID: " + appointmentID + " appointmentType: " + appointmentType + " ", serverResponse);
                 break;

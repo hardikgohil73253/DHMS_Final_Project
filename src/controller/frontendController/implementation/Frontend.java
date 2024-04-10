@@ -16,14 +16,12 @@ import java.util.concurrent.TimeUnit;
 import static FrontEnd.FrontEnd.ANSI_RESET;
 import static FrontEnd.FrontEnd.sendUnicastToSequencer;
 
-
 @WebService(endpointInterface = "controller.webcontroller.webServiceInterface")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 
 public class Frontend implements webServiceInterface {
     public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
-
     public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
     private static long DYNAMIC_TIMEOUT = 10000;
     private static int Rm1BugCount = 0;
@@ -37,12 +35,14 @@ public class Frontend implements webServiceInterface {
 //    private final String serverID;
 //    private final String serverName;
     private long responseTime = DYNAMIC_TIMEOUT;
-    private final FEInterface inter;
+    private FEInterface inter;
     private long startTime;
     private CountDownLatch latch;
 //    private final FEInterface inter;
     private final List<ResponseFromRM> responses = new ArrayList<>();
 //    private ORB orb;
+
+    public Frontend(){}
 
     public Frontend(FEInterface inter) {
         super();
@@ -50,7 +50,6 @@ public class Frontend implements webServiceInterface {
 //        this.serverID = serverID;
 //        this.serverName = serverName;
     }
-
 
     @Override
     public synchronized String addAppointment(String userID,String appointmentID, String appointmentType, int bookingCapacity) {

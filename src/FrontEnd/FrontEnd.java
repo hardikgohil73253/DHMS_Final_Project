@@ -8,7 +8,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import FrontEnd.ResponseFromRM;
 import controller.frontendController.FEInterface;
 
 public class FrontEnd {
@@ -67,6 +66,8 @@ public class FrontEnd {
             System.out.println( " Server is Up & Running");
             Runnable task = () -> {
                 listenForUDPResponses(service);
+
+
             };
             Thread thread = new Thread(task);
             thread.start();
@@ -133,7 +134,6 @@ public class FrontEnd {
         System.out.println("listening for UDP message from RM through UDP multicast...");
         DatagramSocket aSocket = null;
         try {
-
             InetAddress desiredAddress = InetAddress.getByName(FE_IP_Address);
 
             aSocket = new DatagramSocket(FE_PORT, desiredAddress);
@@ -150,7 +150,6 @@ public class FrontEnd {
                 System.out.println("Adding response to FrontEndImplementation:");
                 service.addReceivedResponse(rs);
             }
-
         } catch (SocketException e) {
             System.out.println("Socket: " + e.getMessage());
         } catch (IOException e) {

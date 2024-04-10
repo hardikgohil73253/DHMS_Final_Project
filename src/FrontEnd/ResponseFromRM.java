@@ -34,6 +34,9 @@ public class ResponseFromRM {
 //        }
     }
 
+    public ResponseFromRM(){
+    }
+
     public int getSEQUENCE_ID() {
         return SEQUENCE_ID;
     }
