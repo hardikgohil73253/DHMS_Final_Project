@@ -3,7 +3,6 @@ package Model;
 import java.util.List;
 import java.util.ArrayList;
 
-import static controller.webcontroller.implementation.AppointmentManagement.*;
 
 
 public class AppointmentModel {
@@ -45,11 +44,11 @@ public class AppointmentModel {
 
     public static String checkAPPOINTMENT_SERVER(String APPOINTMENT_ID){
         if (APPOINTMENT_ID.substring(0, 3).equalsIgnoreCase("MTL")) {
-            return APPOINTMENT_SERVER_MONTREAL;
+            return MONTREAL;
         } else if (APPOINTMENT_ID.substring(0, 3).equalsIgnoreCase("QUE")) {
-            return APPOINTMENT_SERVER_QUEBEC;
+            return QUEBEC;
         } else {
-            return APPOINTMENT_SERVER_SHERBROOKE;
+            return SHERBROOKE;
         }
     }
 

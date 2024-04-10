@@ -1,7 +1,6 @@
 package FrontEnd;
 
-import controller.frontendController.implementation.Frontend;
-
+import controller.frontendController.implementation.FrontendImplementation;
 import javax.xml.ws.Endpoint;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -27,8 +26,8 @@ public class FrontEnd {
     public static void main(String[] args) throws Exception {
         try {
 //            String serverID = "FrontEnd";
-//            String serverName = "Frontend";
-//            Frontend service = new Frontend(serverID,serverName);
+//            String serverName = "FrontendImplementation";
+//            FrontendImplementation service = new FrontendImplementation(serverID,serverName);
             FEInterface inter = new FEInterface() {
                 @Override
                 public void informRmHasBug(int RmNumber) {
@@ -59,18 +58,16 @@ public class FrontEnd {
                     sendUnicastToSequencer(myRequest);
                 }
             };
-            Frontend service = new Frontend(inter);
-            System.out.println("Frontend Server Starting.....");
-            String serverEndpoint = "http://localhost:8080/frontend";
+            FrontendImplementation service = new FrontendImplementation(inter);
+            System.out.println("FrontendImplementation Server Starting.....");
+            String serverEndpoint = "http://localhost:8080/Frontend";
             Endpoint endpoint = Endpoint.publish(serverEndpoint, service);
             System.out.println( " Server is Up & Running");
-            Runnable task = () -> {
-                listenForUDPResponses(service);
-
-
-            };
-            Thread thread = new Thread(task);
-            thread.start();
+//            Runnable task = () -> {
+//                listenForUDPResponses(service);
+//            };
+//            Thread thread = new Thread(task);
+//            thread.start();
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
@@ -80,7 +77,7 @@ public class FrontEnd {
         DatagramSocket aSocket = null;
         String dataFromClient = requestFromClient.toString();
 
-        System.out.println( ANSI_GREEN_BACKGROUND +"Frontend Uni casting dataFromClient To Sequencer ---> " + ANSI_RESET + dataFromClient);
+        System.out.println( ANSI_GREEN_BACKGROUND +"FrontendImplementation Uni casting dataFromClient To Sequencer ---> " + ANSI_RESET + dataFromClient);
 
         int sequenceID = 0;
 
@@ -98,7 +95,7 @@ public class FrontEnd {
             aSocket.receive(response);
             String sentence = new String(response.getData(), 0, response.getLength());
             sequenceID = Integer.parseInt(sentence.trim());
-            System.out.println( ANSI_GREEN_BACKGROUND + "Frontend received response from Sequencer <--- SequenceID:" + ANSI_RESET + sequenceID);
+            System.out.println( ANSI_GREEN_BACKGROUND + "FrontendImplementation received response from Sequencer <--- SequenceID:" + ANSI_RESET + sequenceID);
         } catch (SocketException e) {
             System.out.println("Failed: " + requestFromClient.noRequestSendError());
             System.out.println("Socket: " + e.getMessage());
@@ -129,34 +126,34 @@ public class FrontEnd {
 //
 //    }
 
-    private static void listenForUDPResponses(Frontend service) {
-
-        System.out.println("listening for UDP message from RM through UDP multicast...");
-        DatagramSocket aSocket = null;
-        try {
-            InetAddress desiredAddress = InetAddress.getByName(FE_IP_Address);
-
-            aSocket = new DatagramSocket(FE_PORT, desiredAddress);
-            byte[] buffer = new byte[1000];
-            System.out.println("FrontEnd Server Started fro listening UDPResponses " + desiredAddress + ":" + FE_PORT + "............");
-
-            while (true) {
-                DatagramPacket response = new DatagramPacket(buffer, buffer.length);
-                aSocket.receive(response);
-                String sentence = new String(response.getData(), 0, response.getLength()).trim();
-                String[] parts = sentence.split(";");
-                System.out.println(ANSI_GREEN_BACKGROUND + "Frontend received Response received from <--- "+ parts[2]+ "::" +ANSI_RESET + sentence);
-                ResponseFromRM rs = new ResponseFromRM(sentence);
-                System.out.println("Adding response to FrontEndImplementation:");
-                service.addReceivedResponse(rs);
-            }
-        } catch (SocketException e) {
-            System.out.println("Socket: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IO: " + e.getMessage());
-        }finally {
-            if (aSocket != null)
-                aSocket.close();
-        }
-    }
+//    private static void listenForUDPResponses(FrontendImplementation service) {
+//
+//        System.out.println("listening for UDP message from RM through UDP multicast...");
+//        DatagramSocket aSocket = null;
+//        try {
+//            InetAddress desiredAddress = InetAddress.getByName(FE_IP_Address);
+//
+//            aSocket = new DatagramSocket(FE_PORT, desiredAddress);
+//            byte[] buffer = new byte[1000];
+//            System.out.println("FrontEnd Server Started fro listening UDPResponses " + desiredAddress + ":" + FE_PORT + "............");
+//
+//            while (true) {
+//                DatagramPacket response = new DatagramPacket(buffer, buffer.length);
+//                aSocket.receive(response);
+//                String sentence = new String(response.getData(), 0, response.getLength()).trim();
+//                String[] parts = sentence.split(";");
+//                System.out.println(ANSI_GREEN_BACKGROUND + "FrontendImplementation received Response received from <--- "+ parts[2]+ "::" +ANSI_RESET + sentence);
+//                ResponseFromRM rs = new ResponseFromRM(sentence);
+//                System.out.println("Adding response to FrontEndImplementation:");
+//                service.addReceivedResponse(rs);
+//            }
+//        } catch (SocketException e) {
+//            System.out.println("Socket: " + e.getMessage());
+//        } catch (IOException e) {
+//            System.out.println("IO: " + e.getMessage());
+//        }finally {
+//            if (aSocket != null)
+//                aSocket.close();
+//        }
+//    }
 }

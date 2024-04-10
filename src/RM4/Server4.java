@@ -71,12 +71,9 @@ public class Server4 {
                 Log.serverLog(serverID, " RM4 Server Started...");
                 AppointmentManagement service = new AppointmentManagement(serverID, serverName);
 
-//                Endpoint endpoint = Endpoint.publish(serverEndpoint, service);
-
                 System.out.println(serverName + " Server is Up & Running");
                 Log.serverLog(serverID, " Server is Up & Running");
 
-//            addTestData(server);
                 Runnable task = () -> {
                     receive(service, serverUdpPort, serverName, serverID);
                 };

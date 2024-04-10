@@ -2,26 +2,28 @@ package RM3;
 
 
 import RM3.RMmodel.Message;
-import RM3.Server3;
+import RM3.webcontroller.webInterface;
 
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
 import java.io.IOException;
 import java.net.*;
+import java.util.Iterator;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class RM3 {
-    private static final String Bug_ID = "MTLM8888";
-    private static final String Crash_ID = "MTLM9999";
 
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     public static final String ANSI_RESET = "\u001B[0m";
     public static int lastSequenceID = 1;
-    public static int bug_counter = 0;
+    public static Service frontendService;
     public static ConcurrentHashMap<Integer, Message> message_list = new ConcurrentHashMap<Integer, Message>();
     public static Queue<Message> message_q = new ConcurrentLinkedQueue<>();
     private static boolean serversFlag = true;
     private static boolean BugFlag = false;
+    private static webInterface obj;
 
     public static void main(String[] args) throws Exception {
         Run();
@@ -32,7 +34,6 @@ public class RM3 {
             try {
                 receive();
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         };
@@ -41,11 +42,7 @@ public class RM3 {
     }
 
     private static void receive() throws Exception {
-        MulticastSocket socket = null;
-        try {
-            NetworkInterface ni = NetworkInterface.getByName("en0");
-            socket = new MulticastSocket(1234);
-            socket.setInterface(ni.getInetAddresses().nextElement());
+        try (MulticastSocket socket = new MulticastSocket(1234)) {
             socket.joinGroup(InetAddress.getByName("230.1.1.10"));
 
             byte[] buffer = new byte[1000];
@@ -118,9 +115,8 @@ public class RM3 {
                     BugFlag = true;
                     Message message = message_obj_create(data);
                     System.out.println("RM3 has bug:" + message.toString());
-                    System.out.println(ANSI_RED_BACKGROUND +"RM3 is terminated" + ANSI_RESET);
-                }
-                else if (parts[2].equalsIgnoreCase("24")) {
+                    System.out.println(ANSI_RED_BACKGROUND + "RM3 is terminated" + ANSI_RESET);
+                } else if (parts[2].equalsIgnoreCase("24")) {
                     Thread handleThread = getHandleThread();
                     handleThread.join();
                     System.out.println("RM3 handled the crash!");
@@ -132,9 +128,6 @@ public class RM3 {
             System.out.println("Socket: " + e.getMessage());
         } catch (IOException e) {
             System.out.println("IO: " + e.getMessage());
-        } finally {
-            if (socket != null)
-                socket.close();
         }
     }
 
@@ -225,34 +218,21 @@ public class RM3 {
         System.out.println("before while true");
         while (true) {
             synchronized (RM3.class) {
-                for (Message data : message_q) {
+                Iterator<Message> itr = message_q.iterator();
+                while (itr.hasNext()) {
+                    Message data = itr.next();
+                    System.out.println("RM3 is executing message request. Detail:" + data);
                     //when the servers are down serversFlag is False therefore, no execution untill all servers are up.
                     if (data.sequenceId == lastSequenceID && serversFlag) {
-                        if (BugFlag) {
-//                            if (bug_counter == 0)
-                            System.out.println(ANSI_RED_BACKGROUND + "RM3 is terminated" + ANSI_RESET);
-//                            requestToServers(data);
-                            Message bug_message = new Message(data.sequenceId, "Null", "RM3",
-                                    data.Function, data.userID, data.newAppointmentID,
-                                    data.newAppointmentType, data.oldAppointmentID,
-                                    data.oldAppointmentType, data.bookingCapacity);
-//                            bug_counter += 1;
-                            lastSequenceID += 1;
-//                            messsageToFront(bug_message.toString(), data.FrontIpAddress);
-                            message_q.poll();
-                        } else {
-                            System.out.println("RM3 is executing message request. Detail:" + data);
-                            String response = requestToServers(data);
-
-                            System.out.println(data);
-
-                            Message message = new Message(data.sequenceId, response, "RM3", data.Function, data.userID, data.newAppointmentID, data.newAppointmentType, data.oldAppointmentID, data.oldAppointmentType, data.bookingCapacity);
-                            lastSequenceID += 1;
-
-                            System.out.println(message.toString());
-                            messsageToFront(message.toString(), data.FrontIpAddress);
-                            message_q.poll();
-                        }
+                        System.out.println("RM3 is executing message request. Detail:" + data);
+                        String response = requestToServers(data);
+                        Message message = new Message(data.sequenceId, response, "RM3",
+                                data.Function, data.userID, data.newAppointmentID,
+                                data.newAppointmentType, data.oldAppointmentID,
+                                data.oldAppointmentType, data.bookingCapacity);
+                        lastSequenceID += 1;
+                        messsageToFront(message.toString(), data.FrontIpAddress);
+                        message_q.poll();
                     }
                 }
             }
@@ -261,38 +241,44 @@ public class RM3 {
 
     //Send RMI request to server
     private static String requestToServers(Message input) throws Exception {
-        String serverName = input.userID.substring(0, 3);
-        System.out.println(input.userID.substring(0, 3));
-        int port = 0;
-
-        if(serverName.equalsIgnoreCase("MTL")) {
-            port = 3211;
-        } else if(serverName.equalsIgnoreCase("QUE")) {
-            port = 3212;
-        } else if(serverName.equalsIgnoreCase("SHE")) {
-            port = 3213;
-        }
-
-        try (DatagramSocket aSocket = new DatagramSocket()) {
-            byte[] m = input.toString().getBytes();
-            InetAddress aHost = InetAddress.getByName("localhost");
-            DatagramPacket request = new DatagramPacket(m, m.length, aHost, port);
-            aSocket.send(request);
-            System.out.println("RM3 sending request to server:" + ' ' + port);
-
-            byte[] buffer = new byte[1000];
-            DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
-            aSocket.receive(reply);
-
-            String response = new String(reply.getData(), 0,
-                    reply.getLength());
-            System.out.println("RM3 received response from server: " + response);
-            return response;
-        } catch (SocketException e) {
-            System.out.println("Socket: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IO: " + e.getMessage());
-        }
+            URL frontendURL = new URL("http://localhost:8080/frontend?wsdl");
+            QName frontendQName = new QName("http://implementation.frontendController.controller/", "FrontendService");
+            frontendService = Service.create(frontendURL, frontendQName);
+            obj = frontendService.getPort(webInterface.class);
+            String bookingServ = input.userID.substring(0, 3).toUpperCase();
+            if (input.userID.substring(3, 4).equalsIgnoreCase("M")) {
+                if (input.Function.equalsIgnoreCase("addEvent")) {
+                    String response = obj.addAppointment(input.newAppointmentID, input.newAppointmentType, input.bookingCapacity);
+                    System.out.println(response);
+                    return response;
+                } else if (input.Function.equalsIgnoreCase("removeEvent")) {
+                    String response = obj.removeAppointment(input.newAppointmentID, input.newAppointmentType);
+                    System.out.println(response);
+                    return response;
+                } else if (input.Function.equalsIgnoreCase("listEventAvailability")) {
+                    String response = obj.listAppointmentAvailability(input.newAppointmentType);
+                    System.out.println(response);
+                    return response;
+                }
+            } else if (input.userID.substring(3, 4).equalsIgnoreCase("C")) {
+                if (input.Function.equalsIgnoreCase("bookEvent")) {
+                    String response = obj.bookAppointment(input.userID, input.newAppointmentID, input.newAppointmentType);
+                    System.out.println(response);
+                    return response;
+                } else if (input.Function.equalsIgnoreCase("getBookingSchedule")) {
+                    String response = obj.getBookingSchedule(input.userID);
+                    System.out.println(response);
+                    return response;
+                } else if (input.Function.equalsIgnoreCase("cancelEvent")) {
+                    String response = obj.cancelAppointment(input.userID, input.newAppointmentID);
+                    System.out.println(response);
+                    return response;
+                } else if (input.Function.equalsIgnoreCase("swapEvent")) {
+                    String response = obj.swapAppointment(input.userID, input.newAppointmentID, input.newAppointmentType, input.oldAppointmentID, input.oldAppointmentType);
+                    System.out.println(response);
+                    return response;
+                }
+            }
         return "Null response from server" + input.userID.substring(0, 3);
     }
 
@@ -311,12 +297,9 @@ public class RM3 {
     }
 
     public static void reloadServers() throws Exception {
-        for (ConcurrentHashMap.Entry<Integer, Message> entry : message_list.entrySet()) {
-            System.out.println("Recovery Mood-RM3 is executing message request. Detail:" + entry.getValue().toString());
-            requestToServers(entry.getValue());
-            if (entry.getValue().sequenceId >= lastSequenceID)
-                lastSequenceID = entry.getValue().sequenceId + 1;
-        }
-        message_q.clear();
+            for (ConcurrentHashMap.Entry<Integer, Message> entry : message_list.entrySet()) {
+                if (entry.getValue().sequenceId < lastSequenceID)
+                    requestToServers(entry.getValue());
+            }
     }
 }

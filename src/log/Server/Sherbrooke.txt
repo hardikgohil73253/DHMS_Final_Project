@@ -82,3 +82,59 @@
 2024-04-09 10:37:40 PM  Server is Up & Running
 2024-04-09 10:37:41 PM  Server Shutting down
 2024-04-09 10:37:41 PM  UDP Server Started at port 1213
+2024-04-09 11:17:53 PM  RM4 Server Started...
+2024-04-09 11:17:53 PM  Server is Up & Running
+2024-04-09 11:17:53 PM  Server Shutting down
+2024-04-09 11:17:53 PM  UDP Server Started at port 4219
+2024-04-09 11:17:57 PM  Server Started...
+2024-04-09 11:17:57 PM  Server is Up & Running
+2024-04-09 11:17:57 PM  Server Shutting down
+2024-04-09 11:17:57 PM  UDP Server Started at port 3219
+2024-04-09 11:18:15 PM  RM2 Server Started...
+2024-04-09 11:18:15 PM  Server is Up & Running
+2024-04-09 11:18:15 PM  Server Shutting down
+2024-04-09 11:18:15 PM  UDP Server Started at port 2213
+2024-04-09 11:18:18 PM  RM1 Server Started...
+2024-04-09 11:18:18 PM  Server is Up & Running
+2024-04-09 11:18:19 PM  Server Shutting down
+2024-04-09 11:18:19 PM  UDP Server Started at port 1213
+2024-04-10 02:04:48 AM  RM4 Server Started...
+2024-04-10 02:04:48 AM  Server is Up & Running
+2024-04-10 02:04:48 AM  Server Shutting down
+2024-04-10 02:04:48 AM  UDP Server Started at port 4219
+2024-04-10 02:51:14 AM  RM4 Server Started...
+2024-04-10 02:51:14 AM  Server is Up & Running
+2024-04-10 02:51:14 AM  Server Shutting down
+2024-04-10 02:51:14 AM  UDP Server Started at port 4219
+2024-04-10 03:15:27 AM  RM4 Server Started...
+2024-04-10 03:15:27 AM  Server is Up & Running
+2024-04-10 03:15:27 AM  Server Shutting down
+2024-04-10 03:15:27 AM  UDP Server Started at port 4219
+2024-04-10 03:15:36 AM  Server Started...
+2024-04-10 03:15:36 AM  Server is Up & Running
+2024-04-10 03:15:37 AM  Server Shutting down
+2024-04-10 03:15:37 AM  UDP Server Started at port 3219
+2024-04-10 03:15:46 AM  RM2 Server Started...
+2024-04-10 03:15:46 AM  Server is Up & Running
+2024-04-10 03:15:46 AM  Server Shutting down
+2024-04-10 03:15:46 AM  UDP Server Started at port 2213
+2024-04-10 03:16:57 AM  RM1 Server Started...
+2024-04-10 03:16:57 AM  Server is Up & Running
+2024-04-10 03:16:57 AM  Server Shutting down
+2024-04-10 03:16:57 AM  UDP Server Started at port 1213
+2024-04-10 03:20:43 AM  RM4 Server Started...
+2024-04-10 03:20:43 AM  Server is Up & Running
+2024-04-10 03:20:43 AM  Server Shutting down
+2024-04-10 03:20:43 AM  UDP Server Started at port 4219
+2024-04-10 03:21:16 AM  Server Started...
+2024-04-10 03:21:16 AM  Server is Up & Running
+2024-04-10 03:21:16 AM  Server Shutting down
+2024-04-10 03:21:16 AM  UDP Server Started at port 3219
+2024-04-10 03:21:27 AM  RM2 Server Started...
+2024-04-10 03:21:27 AM  Server is Up & Running
+2024-04-10 03:21:27 AM  Server Shutting down
+2024-04-10 03:21:27 AM  UDP Server Started at port 2213
+2024-04-10 03:21:37 AM  RM1 Server Started...
+2024-04-10 03:21:37 AM  Server is Up & Running
+2024-04-10 03:21:37 AM  Server Shutting down
+2024-04-10 03:21:37 AM  UDP Server Started at port 1213

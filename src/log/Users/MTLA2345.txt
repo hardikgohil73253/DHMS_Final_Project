@@ -6,3 +6,11 @@
 2024-04-09 07:41:47 PM  attempting to addAppointment
 2024-04-09 10:46:54 PM  login attempt
 2024-04-09 10:47:01 PM  attempting to addAppointment
+2024-04-09 11:18:53 PM  login attempt
+2024-04-09 11:19:14 PM  attempting to addAppointment
+2024-04-10 03:19:36 AM  login attempt
+2024-04-10 03:19:43 AM  attempting to addAppointment
+2024-04-10 03:20:03 AM  addAppointment |  appointmentID: MTLM101024 appointmentType: PHYSICIAN appointmentCapacity: 2  | Fail: No response from any server
+2024-04-10 03:22:46 AM  login attempt
+2024-04-10 03:22:56 AM  attempting to addAppointment
+2024-04-10 03:23:17 AM  addAppointment |  appointmentID: MTLM101024 appointmentType: PHYSICIAN appointmentCapacity: 2  | Fail: No response from any server

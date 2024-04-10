@@ -2,7 +2,6 @@ package RM4.webcontroller.implementation;
 
 import Model.ClientModel;
 import Model.AppointmentModel;
-import RM4.CommonOutput;
 import RM4.webcontroller.webInterface;
 import log.Log;
 

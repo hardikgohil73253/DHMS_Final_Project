@@ -3,23 +3,25 @@ package controller.frontendController.implementation;
 import FrontEnd.ClientRequest;
 import FrontEnd.ResponseFromRM;
 import controller.frontendController.FEInterface;
-import controller.webcontroller.webServiceInterface;
+import controller.frontendController.webServiceInterface;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
+import java.io.IOException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import static FrontEnd.FrontEnd.ANSI_RESET;
-import static FrontEnd.FrontEnd.sendUnicastToSequencer;
+import static FrontEnd.FrontEnd.FE_IP_Address;
 
-@WebService(endpointInterface = "controller.webcontroller.webServiceInterface")
+@WebService(endpointInterface = "controller.frontendController.webServiceInterface")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 
-public class Frontend implements webServiceInterface {
+public class FrontendImplementation implements webServiceInterface {
     public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
@@ -42,11 +44,14 @@ public class Frontend implements webServiceInterface {
     private final List<ResponseFromRM> responses = new ArrayList<>();
 //    private ORB orb;
 
-    public Frontend(){}
+    public FrontendImplementation(){}
 
-    public Frontend(FEInterface inter) {
+    public FrontendImplementation(FEInterface inter) {
         super();
         this.inter = inter;
+        Runnable task = this::listenForUDPResponse;
+        Thread thread = new Thread(task);
+        thread.start();
 //        this.serverID = serverID;
 //        this.serverName = serverName;
     }
@@ -63,6 +68,26 @@ public class Frontend implements webServiceInterface {
         //Message format 0;LOCALHOST;00;ADD Appointment;MTLA101024;MTLM101024;MONTREAL;NULL;NULL;1
         System.out.println("inside FrontEnd Implementation:addAppointment ---> " + clientRequest);
         return validateResponses(clientRequest);
+    }
+
+    private void listenForUDPResponse(){
+        DatagramSocket aSocket = null;
+        try{
+            InetAddress desiredAddress = InetAddress.getByName(FE_IP_Address);
+            aSocket =new DatagramSocket(8080,desiredAddress);
+            byte[] buffer = new byte[1000];
+            while(true){
+                DatagramPacket response = new DatagramPacket(buffer, buffer.length);
+                aSocket.receive(response);
+                String sentence = new String(response.getData(),0, response.getLength()).trim();
+                ResponseFromRM res = new ResponseFromRM(sentence);
+                addReceivedResponse(res);
+            }
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -161,12 +186,13 @@ public class Frontend implements webServiceInterface {
                 rmDown(1);
                 rmDown(2);
                 rmDown(3);
+                rmDown(4);
                 break;
             default:
                 resp = "Fail: " + clientRequest.noRequestSendError();
                 break;
         }
-        System.out.println(ANSI_GREEN_BACKGROUND +"Frontend validating Responses ::: Responses remain:" +ANSI_RESET+ latch.getCount() + " Response to be sent to client ---> " + resp);
+        System.out.println(ANSI_GREEN_BACKGROUND +"FrontendImplementation validating Responses ::: Responses remain:" +ANSI_RESET+ latch.getCount() + " Response to be sent to client ---> " + resp);
         return resp;
     }
 
@@ -257,8 +283,6 @@ public class Frontend implements webServiceInterface {
                 return res2.getRESPONSE();
             } else if (res1 == null && res3 == null && res4 == null) {
                 return res2.getRESPONSE();
-            } else {
-//                rmBugFound(2);
             }
         }
 
@@ -285,8 +309,6 @@ public class Frontend implements webServiceInterface {
                 return res3.getRESPONSE();
             } else if (res1 == null && res2 == null && res4 == null) {
                 return res3.getRESPONSE();
-            } else {
-//                rmBugFound(3);
             }
         }
 
@@ -311,8 +333,6 @@ public class Frontend implements webServiceInterface {
                 return res4.getRESPONSE();
             } else if (res1 == null && res2 == null && res3 == null) {
                 return res4.getRESPONSE();
-            } else {
-//                rmBugFound(4);
             }
         }
 
@@ -432,8 +452,8 @@ public class Frontend implements webServiceInterface {
     private String retryRequest(ClientRequest ClientRequest) {
         System.out.println("FE Implementation:retryRequest>>>" + ClientRequest.toString());
         startTime = System.nanoTime();
-        retryRequest(ClientRequest);
-        latch = new CountDownLatch(3);
+        inter.retryRequest(ClientRequest);
+        latch = new CountDownLatch(4);
         waitForResponse();
         return validateResponses(ClientRequest);
     }

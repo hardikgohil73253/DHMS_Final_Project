@@ -1,8 +1,7 @@
 package client;
 
-import controller.frontendController.FEInterface;
 import Model.AppointmentModel;
-import controller.webcontroller.webServiceInterface;
+import controller.frontendController.webServiceInterface;
 import log.Log;
 
 import javax.xml.namespace.QName;
@@ -41,8 +40,8 @@ public class Client {
 
 
     public static void main(String[] args) throws Exception {
-        URL frontendURL = new URL("http://localhost:8080/frontend?wsdl");
-        QName frontendQName = new QName("http://implementation.frontendController.controller/", "FrontendService");
+        URL frontendURL = new URL("http://localhost:8080/Frontend?wsdl");
+        QName frontendQName = new QName("http://implementation.frontendController.controller/", "FrontendImplementationService");
         frontendService = Service.create(frontendURL, frontendQName);
         init();
     }
