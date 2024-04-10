@@ -8,6 +8,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import FrontEnd.ResponseFromRM;
+import controller.frontendController.FEInterface;
 
 public class FrontEnd {
     private static final int SEQUENCER_PORT = 1333;
@@ -25,13 +27,44 @@ public class FrontEnd {
 
     public static void main(String[] args) throws Exception {
         try {
-            String serverID = "FrontEnd";
-            String serverName = "Frontend";
-            Frontend service = new Frontend(serverID,serverName);
+//            String serverID = "FrontEnd";
+//            String serverName = "Frontend";
+//            Frontend service = new Frontend(serverID,serverName);
+            FEInterface inter = new FEInterface() {
+                @Override
+                public void informRmHasBug(int RmNumber) {
+//                    String errorMessage = new MyRequest(RmNumber, "1").toString();
+                    ClientRequest errorMessage = new ClientRequest(RmNumber, "1");
+                    System.out.println("Rm:" + RmNumber + "has bug");
+//                    sendMulticastFaultMessageToRms(errorMessage);
+                    sendUnicastToSequencer(errorMessage);
+                }
+
+                @Override
+                public void informRmIsDown(int RmNumber) {
+//                    String errorMessage = new MyRequest(RmNumber, "2").toString();
+                    ClientRequest errorMessage = new ClientRequest(RmNumber, "2");
+                    System.out.println("Rm:" + RmNumber + "is down");
+//                    sendMulticastFaultMessageToRms(errorMessage);
+                    sendUnicastToSequencer(errorMessage);
+                }
+
+                @Override
+                public int sendRequestToSequencer(ClientRequest myRequest) {
+                    return sendUnicastToSequencer(myRequest);
+                }
+
+                @Override
+                public void retryRequest(ClientRequest myRequest) {
+                    System.out.println("No response from all Rms, Retrying request...");
+                    sendUnicastToSequencer(myRequest);
+                }
+            };
+            Frontend service = new Frontend(inter);
             System.out.println("Frontend Server Starting.....");
             String serverEndpoint = "http://localhost:8080/frontend";
             Endpoint endpoint = Endpoint.publish(serverEndpoint, service);
-            System.out.println(serverName + " Server is Up & Running");
+            System.out.println( " Server is Up & Running");
             Runnable task = () -> {
                 listenForUDPResponses(service);
             };
@@ -113,9 +146,9 @@ public class FrontEnd {
                 String sentence = new String(response.getData(), 0, response.getLength()).trim();
                 String[] parts = sentence.split(";");
                 System.out.println(ANSI_GREEN_BACKGROUND + "Frontend received Response received from <--- "+ parts[2]+ "::" +ANSI_RESET + sentence);
-                ResponseFromRM responseFromRM = new ResponseFromRM(sentence);
+                ResponseFromRM rs = new ResponseFromRM(sentence);
                 System.out.println("Adding response to FrontEndImplementation:");
-                service.addReceivedResponse(responseFromRM);
+                service.addReceivedResponse(rs);
             }
 
         } catch (SocketException e) {

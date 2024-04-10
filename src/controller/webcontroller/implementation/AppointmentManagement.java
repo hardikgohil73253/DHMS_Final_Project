@@ -66,7 +66,7 @@ public class AppointmentManagement implements webServiceInterface {
     }
 
     @Override
-    public String addAppointment( String appointmentID, String appointmentType, int appointmentCapacity) {
+    public String addAppointment( String userID, String appointmentID, String appointmentType, int appointmentCapacity) {
         String response;
         if (allAppointments.get(appointmentType).containsKey(appointmentID)) {
             if (allAppointments.get(appointmentType).get(appointmentID).getAPPOINTMENT_CAPACITY() <= appointmentCapacity) {
@@ -110,7 +110,7 @@ public class AppointmentManagement implements webServiceInterface {
     }
 
     @Override
-    public String removeAppointment(String appointmentID, String appointmentType) {
+    public String removeAppointment(String userID, String appointmentID, String appointmentType) {
         String response;
         String logMessage = " appointmentID: " + appointmentID + " appointmentType: " + appointmentType + " ";
 
@@ -134,7 +134,7 @@ public class AppointmentManagement implements webServiceInterface {
     }
 
     @Override
-    public String listAppointmentAvailability(String appointmentType) {
+    public String listAppointmentAvailability(String userID, String appointmentType) {
         StringBuilder builder = new StringBuilder();
         builder.append(serverName).append(" Server ").append(appointmentType).append(":\n");
 

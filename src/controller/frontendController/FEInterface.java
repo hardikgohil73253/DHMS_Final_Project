@@ -16,22 +16,19 @@ public interface FEInterface {
     int sendRequestToSequencer(ClientRequest clientRequest);
 
     //TODO : Change it according
-    String retryRequest(ClientRequest clientRequest);
+    void retryRequest(ClientRequest clientRequest);
 
-
-    public String addAppointment(String adminID ,String appointmentID, String appointmentType, int bookingCapacity);
-
-    public String removeAppointment( String adminID , String appointmentID, String appointmentType);
-
-    public String listAppointmentAvailability( String adminID,String appointmentType);
-
-
-
-    public String bookAppointment(String patientID, String appointmentID, String appointmentType);
-
-    public String getBookingSchedule(String patientID);
-
-    public String cancelAppointment(String patientID, String appointmentID, String appointmentType);
-
-    public String swapAppointment(String patientID, String newAppointmentID, String newAppointmentType, String oldAppointmentID, String oldAppointmentType);
+//    public String addAppointment(String adminID ,String appointmentID, String appointmentType, int bookingCapacity);
+//
+//    public String removeAppointment( String adminID , String appointmentID, String appointmentType);
+//
+//    public String listAppointmentAvailability( String adminID,String appointmentType);
+//
+//    public String bookAppointment(String patientID, String appointmentID, String appointmentType);
+//
+//    public String getBookingSchedule(String patientID);
+//
+//    public String cancelAppointment(String patientID, String appointmentID, String appointmentType);
+//
+//    public String swapAppointment(String patientID, String newAppointmentID, String newAppointmentType, String oldAppointmentID, String oldAppointmentType);
 }

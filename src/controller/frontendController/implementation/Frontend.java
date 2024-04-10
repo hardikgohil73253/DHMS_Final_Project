@@ -3,6 +3,7 @@ package controller.frontendController.implementation;
 import FrontEnd.ClientRequest;
 import FrontEnd.ResponseFromRM;
 import controller.frontendController.FEInterface;
+import controller.webcontroller.webServiceInterface;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -16,10 +17,10 @@ import static FrontEnd.FrontEnd.ANSI_RESET;
 import static FrontEnd.FrontEnd.sendUnicastToSequencer;
 
 
-@WebService(endpointInterface = "controller.frontendController.FEInterface")
+@WebService(endpointInterface = "controller.webcontroller.webServiceInterface")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 
-public class Frontend implements FEInterface {
+public class Frontend implements webServiceInterface {
     public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
 
@@ -33,26 +34,28 @@ public class Frontend implements FEInterface {
     private static int Rm2NoResponseCount = 0;
     private static int Rm3NoResponseCount = 0;
     private static int Rm4NoResponseCount = 0;
-    private final String serverID;
-    private final String serverName;
+//    private final String serverID;
+//    private final String serverName;
     private long responseTime = DYNAMIC_TIMEOUT;
+    private final FEInterface inter;
     private long startTime;
     private CountDownLatch latch;
 //    private final FEInterface inter;
     private final List<ResponseFromRM> responses = new ArrayList<>();
 //    private ORB orb;
 
-    public Frontend(String serverID,String serverName) {
+    public Frontend(FEInterface inter) {
         super();
-        this.serverID = serverID;
-        this.serverName = serverName;
+        this.inter = inter;
+//        this.serverID = serverID;
+//        this.serverName = serverName;
     }
 
 
     @Override
-    public synchronized String addAppointment(String adminID, String appointmentID, String appointmentType, int bookingCapacity) {
+    public synchronized String addAppointment(String userID,String appointmentID, String appointmentType, int bookingCapacity) {
 
-        ClientRequest clientRequest = new ClientRequest("addAppointment", adminID);
+        ClientRequest clientRequest = new ClientRequest("addAppointment", userID);
         clientRequest.setAPPOINTMENT_ID(appointmentID);
         clientRequest.setAPPOINTMENT_TYPE(appointmentType);
         clientRequest.setBookingCapacity(bookingCapacity);
@@ -64,9 +67,9 @@ public class Frontend implements FEInterface {
     }
 
     @Override
-    public synchronized String removeAppointment(String adminID, String appointmentID, String appointmentType) {
+    public synchronized String removeAppointment(String userID, String appointmentID, String appointmentType) {
 
-        ClientRequest clientRequest = new ClientRequest("removeAppointment", adminID);
+        ClientRequest clientRequest = new ClientRequest("removeAppointment", userID);
         clientRequest.setAPPOINTMENT_ID(appointmentID);
         clientRequest.setAPPOINTMENT_TYPE(appointmentType);
         clientRequest.setSEQUENCER_NUMBER(sendUdpUnicastToSequencer(clientRequest));
@@ -75,9 +78,9 @@ public class Frontend implements FEInterface {
     }
 
     @Override
-    public synchronized String listAppointmentAvailability(String adminID, String appointmentType) {
+    public synchronized String listAppointmentAvailability(String userID, String appointmentType) {
 
-        ClientRequest clientRequest = new ClientRequest("listAppointmentAvailability", adminID);
+        ClientRequest clientRequest = new ClientRequest("listAppointmentAvailability", userID);
         clientRequest.setAPPOINTMENT_TYPE(appointmentType);
         clientRequest.setSEQUENCER_NUMBER(sendUdpUnicastToSequencer(clientRequest));
         System.out.println("FrontEnd Implementation:listAppointmentAvailability>>>" + clientRequest);
@@ -105,11 +108,11 @@ public class Frontend implements FEInterface {
     }
 
     @Override
-    public synchronized String cancelAppointment(String patientID, String appointmentID, String appointmentType) {
+    public synchronized String cancelAppointment(String userID, String appointmentID) {
 
-        ClientRequest clientRequest = new ClientRequest("cancelBooking", patientID);
+        ClientRequest clientRequest = new ClientRequest("cancelBooking", userID);
         clientRequest.setAPPOINTMENT_ID(appointmentID);
-        clientRequest.setAPPOINTMENT_TYPE(appointmentType);
+//        clientRequest.setAPPOINTMENT_TYPE(appointmentType);
         clientRequest.setSEQUENCER_NUMBER(sendUdpUnicastToSequencer(clientRequest));
         System.out.println("FrontEnd Implementation:cancelAppointment ---> " + clientRequest.toString());
         return validateResponses(clientRequest);
@@ -314,8 +317,6 @@ public class Frontend implements FEInterface {
             }
         }
 
-
-
         return "!! Fail: majority response not found";
     }
 
@@ -325,14 +326,14 @@ public class Frontend implements FEInterface {
                 Rm1BugCount++;
                 if (Rm1BugCount == 3) {
                     Rm1BugCount = 0;
-                    informRmHasBug(rmNumber);
+                    inter.informRmHasBug(rmNumber);
                 }
                 break;
             case 2:
                 Rm2BugCount++;
                 if (Rm2BugCount == 3) {
                     Rm2BugCount = 0;
-                    informRmHasBug(rmNumber);
+                    inter.informRmHasBug(rmNumber);
                 }
                 break;
 
@@ -340,14 +341,14 @@ public class Frontend implements FEInterface {
                 Rm3BugCount++;
                 if (Rm3BugCount == 3) {
                     Rm3BugCount = 0;
-                    informRmHasBug(rmNumber);
+                    inter.informRmHasBug(rmNumber);
                 }
                 break;
             case 4:
                 Rm4BugCount++;
                 if (Rm4BugCount == 3) {
                     Rm4BugCount = 0;
-                    informRmHasBug(rmNumber);
+                    inter.informRmHasBug(rmNumber);
                 }
                 break;
         }
@@ -364,14 +365,14 @@ public class Frontend implements FEInterface {
                 Rm1NoResponseCount++;
                 if (Rm1NoResponseCount == 3) {
                     Rm1NoResponseCount = 0;
-                    informRmIsDown(rmNumber);
+                    inter.informRmIsDown(rmNumber);
                 }
                 break;
             case 2:
                 Rm2NoResponseCount++;
                 if (Rm2NoResponseCount == 3) {
                     Rm2NoResponseCount = 0;
-                    informRmIsDown(rmNumber);
+                    inter.informRmIsDown(rmNumber);
                 }
                 break;
 
@@ -379,14 +380,14 @@ public class Frontend implements FEInterface {
                 Rm3NoResponseCount++;
                 if (Rm3NoResponseCount == 3) {
                     Rm3NoResponseCount = 0;
-                    informRmIsDown(rmNumber);
+                    inter.informRmIsDown(rmNumber);
                 }
                 break;
             case 4:
                 Rm4NoResponseCount++;
                 if (Rm4NoResponseCount == 3) {
                     Rm4NoResponseCount = 0;
-                    informRmIsDown(rmNumber);
+                    inter.informRmIsDown(rmNumber);
                 }
         }
         System.out.println("FrontEnd rmDown ---> RM1 - noResponse:" + Rm1NoResponseCount);
@@ -421,54 +422,26 @@ public class Frontend implements FEInterface {
 
     private int sendUdpUnicastToSequencer(ClientRequest clientRequest) {
         startTime = System.nanoTime();
-        int sequenceNumber = sendRequestToSequencer(clientRequest);
+        int sequenceNumber = inter.sendRequestToSequencer(clientRequest);
         clientRequest.setSEQUENCER_NUMBER(sequenceNumber);
         latch = new CountDownLatch(4);
         waitForResponse();
         return sequenceNumber;
     }
 
-    @Override
-    public void informRmHasBug(int RmNumber) {
-
-        ClientRequest errorMessage = new ClientRequest(RmNumber, "1");
-
-        sendUnicastToSequencer(errorMessage);
-
-        System.out.println( ANSI_RED_BACKGROUND + "FrontEnd is informing RmHasBug>>>RM" + RmNumber + " has a bug" + ANSI_RESET);
-
+    //Change it according
+    private String retryRequest(ClientRequest ClientRequest) {
+        System.out.println("FE Implementation:retryRequest>>>" + ClientRequest.toString());
+        startTime = System.nanoTime();
+        retryRequest(ClientRequest);
+        latch = new CountDownLatch(3);
+        waitForResponse();
+        return validateResponses(ClientRequest);
     }
 
-    @Override
-    public void informRmIsDown(int RmNumber) {
-
-        ClientRequest errorMessage = new ClientRequest(RmNumber, "2");
-
-        sendUnicastToSequencer(errorMessage);
-
-        System.out.println( ANSI_RED_BACKGROUND + "FrontEnd is informing RmIsDown>>>RM" + RmNumber + " is down" + ANSI_RESET);
-
-    }
-
-//    @Override
+    //    @Override
 //    public void retryRequest(ClientRequest myRequest) {
 //        System.out.println("No response from all Rms, Retrying request...");
 ////        sendUnicastToSequencer(myRequest);
 //    }
-
-    @Override
-    public int sendRequestToSequencer(ClientRequest clientRequest) {
-        return sendUnicastToSequencer(clientRequest);
-    }
-
-
-    //Change it according
-    public String retryRequest(ClientRequest clientRequest) {
-        System.out.println("FrontEnd Implementation:retryRequest>>>" + clientRequest.toString());
-        startTime = System.nanoTime();
-        retryRequest(clientRequest);
-        latch = new CountDownLatch(4);
-        waitForResponse();
-        return validateResponses(clientRequest);
-    }
 }

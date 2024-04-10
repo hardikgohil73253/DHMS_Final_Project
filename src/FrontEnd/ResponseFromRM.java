@@ -20,7 +20,7 @@ public class ResponseFromRM {
     public ResponseFromRM(String UDP_MESSAGE) {
         setUDP_MESSAGE(UDP_MESSAGE.trim());
         String[] messageParts = getUDP_MESSAGE().split(";");
-        if (messageParts.length >= 10) {
+//        if (messageParts.length >= 10) {
             setSEQUENCE_ID(Integer.parseInt(messageParts[0]));
             setRESPONSE(messageParts[1].trim());
             setRM_NUMBER(messageParts[2]);
@@ -31,7 +31,7 @@ public class ResponseFromRM {
             setOLD_APPOINTMENT_ID(messageParts[7]);
             setOLD_APPOINTMENT_TYPE(messageParts[8]);
             setBOOKING_CAPACITY(Integer.parseInt(messageParts[9]));
-        }
+//        }
     }
 
     public int getSEQUENCE_ID() {
@@ -146,8 +146,8 @@ public class ResponseFromRM {
             return obj1.getFunction().equalsIgnoreCase(this.getFunction())
                     && obj1.getSEQUENCE_ID() == this.getSEQUENCE_ID()
                     && obj1.getUSER_ID().equalsIgnoreCase(this.getUSER_ID())
-                    && obj1.isSuccess() == this.isSuccess()
-                    && obj1.getRESPONSE().equalsIgnoreCase(this.getRESPONSE());
+                    && obj1.isSuccess() == this.isSuccess();
+//                    && obj1.getRESPONSE().equalsIgnoreCase(this.getRESPONSE());
         }
         return false;
     }

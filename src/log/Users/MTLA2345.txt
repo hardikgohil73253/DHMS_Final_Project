@@ -2,3 +2,5 @@
 2024-04-08 01:53:18 PM  attempting to addAppointment
 2024-04-08 02:00:42 PM  login attempt
 2024-04-08 02:00:52 PM  attempting to addAppointment
+2024-04-09 07:41:37 PM  login attempt
+2024-04-09 07:41:47 PM  attempting to addAppointment

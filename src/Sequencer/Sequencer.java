@@ -11,9 +11,7 @@ public class Sequencer {
     private static final String sequencerIP = "localhost";
 //    private static final String sequencerIP = "192.168.2.17";
     public static void main(String[] args) {
-        DatagramSocket aSocket = null;
-        try {
-            aSocket = new DatagramSocket(1333, InetAddress.getByName(sequencerIP));
+        try (DatagramSocket aSocket = new DatagramSocket(1333, InetAddress.getByName(sequencerIP))) {
             byte[] buffer = new byte[1000];
             System.out.println("Sequencer UDP Server Started");
             while (true) {
@@ -28,8 +26,8 @@ public class Sequencer {
 
                 String[] parts = sentence.split(";");
                 int sequencerId1 = Integer.parseInt(parts[0]);
-//                String ip = request.getAddress().getHostAddress();
-                String ip = parts[1];
+                String ip = request.getAddress().getHostAddress();
+//                String ip = parts[1];
 
                 String sentence1 = ip + ";" + parts[2] + ";" + parts[3] + ";" + parts[4] + ";" + parts[5] + ";" + parts[6] + ";" + parts[7] + ";" + parts[8] + ";" + parts[9] + ";";
 
@@ -51,9 +49,6 @@ public class Sequencer {
             System.out.println("Socket: " + e.getMessage());
         } catch (IOException e) {
             System.out.println("IO: " + e.getMessage());
-        } finally {
-            if (aSocket != null)
-                aSocket.close();
         }
     }
 
