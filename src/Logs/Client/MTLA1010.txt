@@ -1,0 +1,80 @@
+DATE: 2024-04-12 06:14:21 pm  logged in successfully.
+DATE: 2024-04-12 06:14:28 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 4
+DATE: 2024-04-12 06:14:31 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-12 06:49:36 pm  logged in successfully.
+DATE: 2024-04-12 06:49:45 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 1
+DATE: 2024-04-12 06:49:48 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-12 06:56:14 pm  logged in successfully.
+DATE: 2024-04-12 06:58:56 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 2
+DATE: 2024-04-12 06:58:58 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-12 07:09:45 pm  logged in successfully.
+DATE: 2024-04-12 07:09:53 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 1
+DATE: 2024-04-12 07:09:56 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-12 07:21:29 pm  logged in successfully.
+DATE: 2024-04-12 07:21:37 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 2
+DATE: 2024-04-12 07:21:40 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-12 08:26:18 pm  logged in successfully.
+DATE: 2024-04-12 08:26:25 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 2
+DATE: 2024-04-12 08:26:30 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-12 08:36:44 pm  logged in successfully.
+DATE: 2024-04-12 08:36:52 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 1
+DATE: 2024-04-12 08:36:55 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-12 08:39:25 pm  logged in successfully.
+DATE: 2024-04-12 08:39:33 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 2
+DATE: 2024-04-12 08:39:35 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-12 08:55:26 pm logged in successfully.
+DATE: 2024-04-12 08:55:34 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 2
+DATE: 2024-04-12 08:55:54 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Fail: No response from any server
+DATE: 2024-04-12 09:02:46 pm logged in successfully.
+DATE: 2024-04-12 09:02:53 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 1
+DATE: 2024-04-12 09:02:58 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-12 10:27:27 pm logged in successfully.
+DATE: 2024-04-12 10:27:34 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 2
+DATE: 2024-04-12 10:27:37 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-12 10:30:54 pm logged in successfully.
+DATE: 2024-04-12 10:31:00 pm  Admin MTLA1010 requested >> Remove appointment || The parameters are >> PHYSICIAN MTLM101024
+DATE: 2024-04-12 10:31:02 pm  Admin MTLA1010 requested >> Remove appointment || Response received from server is >> Success : Appointment has been removed from MTL
+DATE: 2024-04-12 10:33:13 pm logged in successfully.
+DATE: 2024-04-12 10:33:21 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 2
+DATE: 2024-04-12 10:33:22 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-12 10:33:38 pm logged in successfully.
+DATE: 2024-04-12 10:33:39 pm  Admin MTLA1010 requested >> List appointment || The parameters are >> PHYSICIAN
+DATE: 2024-04-12 10:33:41 pm  Admin MTLA1010 requested >> List appointments || Response received from server is >> MTL Server PHYSICIAN:
+MTLM101024 2 
+
+QUE Server PHYSICIAN:
+No Appointment of type PHYSICIAN 
+
+SHE Server PHYSICIAN:
+No Appointment of type PHYSICIAN
+DATE: 2024-04-12 10:34:57 pm logged in successfully.
+DATE: 2024-04-12 10:35:09 pm  Admin MTLA1010 requested >> Book appointment || The parameters are >> PHYSICIAN MTLM101024 MTLP1010
+DATE: 2024-04-12 10:35:10 pm  Admin MTLA1010 requested >> Book appointment || Response received from server is >> Success : Appointment with MTLM101024 booked successfully by MTLP1010
+DATE: 2024-04-12 10:36:19 pm logged in successfully.
+DATE: 2024-04-12 10:36:27 pm  Admin MTLA1010 requested >> Get schedule of appointment || The parameters are >> MTLP1010
+DATE: 2024-04-12 10:36:29 pm  Admin MTLA1010 requested >> Get schedule of appointment || Response received from server is >> PHYSICIAN:
+MTLM101024
+DATE: 2024-04-12 10:37:38 pm logged in successfully.
+DATE: 2024-04-12 10:37:50 pm  Admin MTLA1010 requested >> Cancel appointment || The parameters are >> MTLM101024 MTLP1010
+DATE: 2024-04-12 10:37:51 pm  Admin MTLA1010 requested >> Cancel appointment || Response received from server is >> Success : Appointment MTLM101024 has been canceled for MTLP1010forPHYSICIAN
+DATE: 2024-04-12 10:38:59 pm logged in successfully.
+DATE: 2024-04-12 10:39:09 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 2
+DATE: 2024-04-12 10:39:10 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 capacity has been increased to 2
+DATE: 2024-04-12 10:39:30 pm logged in successfully.
+DATE: 2024-04-12 10:39:42 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> SURGEON MTLM111024 5
+DATE: 2024-04-12 10:39:43 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM111024 added successfully in the server MTL
+DATE: 2024-04-12 10:40:03 pm logged in successfully.
+DATE: 2024-04-12 10:40:12 pm  Admin MTLA1010 requested >> Book appointment || The parameters are >> PHYSICIAN MTLM101024 MTLP1010
+DATE: 2024-04-12 10:40:13 pm  Admin MTLA1010 requested >> Book appointment || Response received from server is >> Success : Appointment with MTLM101024 booked successfully by MTLP1010
+DATE: 2024-04-12 10:40:34 pm logged in successfully.
+DATE: 2024-04-12 10:40:55 pm  Admin MTLA1010 requested >> Swap appointment || The parameters are >> PHYSICIAN MTLM101024 SURGEON MTLM111024 MTLA1010
+DATE: 2024-04-12 10:40:56 pm  Admin MTLA1010 requested >> Swap appointment || Response received from server is >> Null response from serverMTL
+DATE: 2024-04-14 07:30:34 pm logged in successfully.
+DATE: 2024-04-14 07:30:41 pm  Admin MTLA1010 requested >> Add appointment || The parameters are >> PHYSICIAN MTLM101024 1
+DATE: 2024-04-14 07:30:43 pm  Admin MTLA1010 requested >> Add appointment || Response received from server is >> Success : Appointment MTLM101024 added successfully in the server MTL
+DATE: 2024-04-14 07:33:14 pm logged in successfully.
+DATE: 2024-04-14 07:33:27 pm  Admin MTLA1010 requested >> Book appointment || The parameters are >> PHYSICIAN MTLM101024 MTLP1010
+DATE: 2024-04-14 07:33:27 pm  Admin MTLA1010 requested >> Book appointment || Response received from server is >> Fail : Appointment MTLM101024 is already booked with same appointment ID or on same day there is an another appointment.
+DATE: 2024-04-14 07:33:46 pm logged in successfully.
+DATE: 2024-04-14 07:34:02 pm  Admin MTLA1010 requested >> Swap appointment || The parameters are >> PHYSICIAN MTLM101024 SURGEON QUEM101024 MTLA1010
+DATE: 2024-04-14 07:34:02 pm  Admin MTLA1010 requested >> Swap appointment || Response received from server is >> Null response from serverMTL

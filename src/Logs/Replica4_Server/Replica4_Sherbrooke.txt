@@ -1,0 +1,26 @@
+DATE: 2024-04-12 05:50:41 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 06:08:16 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 06:47:54 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 06:54:22 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 07:01:01 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 07:07:53 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 07:19:51 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 08:24:46 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 08:33:43 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 08:35:10 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 08:38:04 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 08:51:51 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 08:53:22 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 09:00:22 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 09:01:50 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 10:26:17 pm Server SHE is started and listening at 7578 and 7534
+DATE: 2024-04-12 10:33:40 pm Server got request with 
+listAppointmentAvailability;null;PHYSICIAN;null
+For Method:: listAppointmentAvailability patientID:: null appointmentType:: PHYSICIAN appointmentID:: null
+DATE: 2024-04-12 10:33:40 pm Server responded with 
+
+SHE Server PHYSICIAN:
+No Appointment of type PHYSICIAN 
+;
+For Method:: listAppointmentAvailability patientID:: null appointmentType:: PHYSICIAN appointmentID:: null
+DATE: 2024-04-14 07:25:24 pm Server SHE is started and listening at 7578 and 7534

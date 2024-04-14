@@ -1,0 +1,3 @@
+DATE: 2024-04-07 12:39:19 am Server MTL is started and listening at 7577 and 7533
+DATE: 2024-04-07 12:39:55 am  The request is >> Add appointment || The Response sent from server is >> Success : Appointment MTLA101023 added successfully in the server MTL
+DATE: 2024-04-07 12:40:34 am  The request is >> Remove appointment || The Response sent from server is >> Success : Appointment has been removed from MTL
